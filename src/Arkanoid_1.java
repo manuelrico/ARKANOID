@@ -7,6 +7,7 @@ import acm.graphics.GOval;
 import acm.graphics.GRect;
 import acm.graphics.GRectangle;
 import acm.program.*;
+import acm.util.RandomGenerator;
 
 
 public class Arkanoid_1 extends acm.program.GraphicsProgram{
@@ -49,6 +50,7 @@ public class Arkanoid_1 extends acm.program.GraphicsProgram{
 	}
 
 	public void run(){
+		
 		waitForClick();
 		while(true){
 			pelota.move(xVelocidad, yVelocidad);
@@ -60,6 +62,7 @@ public class Arkanoid_1 extends acm.program.GraphicsProgram{
 
 
 	private void pintaPiramide(){
+		RandomGenerator random = new RandomGenerator();
 		int x= -(ANCHO_PANTALLA - LADRILLOS_BASE*ANCHO_LADRILLO) /2;
 		int y= 0;
 
@@ -68,7 +71,7 @@ public class Arkanoid_1 extends acm.program.GraphicsProgram{
 				GRect ladrillo = new GRect (ANCHO_LADRILLO,ALTO_LADRILLO);
 				add (ladrillo,i*ANCHO_LADRILLO-x,y+j*ALTO_LADRILLO);
 				ladrillo.setFilled(true);
-				ladrillo.setFillColor(Color.white);
+				ladrillo.setFillColor(random.nextColor());
 				pause(60);
 			}
 			x = x+ANCHO_LADRILLO/2;
