@@ -2,13 +2,16 @@
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 
+import acm.graphics.GImage;
 import acm.graphics.GOval;
 import acm.graphics.GRect;
+import acm.graphics.GRectangle;
 import acm.program.*;
 
 
 public class Arkanoid_1 extends acm.program.GraphicsProgram{
 
+	
 	private static int ANCHO_PANTALLA=400;
 	private static int ALTO_PANTALLA=400;
 	private static int ANCHO_CURSOR = 60;
@@ -18,6 +21,7 @@ public class Arkanoid_1 extends acm.program.GraphicsProgram{
 	private static final int ALTO_LADRILLO = 12;
 	private static final int LADRILLOS_BASE = 12;
 	
+	GImage fondo = new GImage ("Gif.gif");
 	int alto_pelota = 10;
 	
 	GRect cursor;
@@ -26,17 +30,19 @@ public class Arkanoid_1 extends acm.program.GraphicsProgram{
 	double yVelocidad = -3;  //velocidad en el eje y
 	
 	public void init(){
+		add(fondo,0,0);
 		setSize(ANCHO_PANTALLA, ALTO_PANTALLA);
 		cursor = new GRect(ANCHO_CURSOR,5);
 		cursor.setFilled(true);
-		cursor.setFillColor(Color.black);
+		cursor.setFillColor(Color.white);
 		add(cursor, 0, ALTO_PANTALLA-100);
 		
 		pelota = new GOval(alto_pelota, alto_pelota);
 		pelota.setFilled(true);
-		pelota.setFillColor(Color.blue);
+		pelota.setFillColor(Color.white);
 		add(pelota, 185, ALTO_PANTALLA-110);
-
+		
+		
 		pintaPiramide();
 		
 		addMouseListeners();
@@ -60,6 +66,8 @@ public class Arkanoid_1 extends acm.program.GraphicsProgram{
 			for (int i=j; i<LADRILLOS_BASE; i++){
 				GRect ladrillo = new GRect (ANCHO_LADRILLO,ALTO_LADRILLO);
 				add (ladrillo,i*ANCHO_LADRILLO-x,y+j*ALTO_LADRILLO);
+				ladrillo.setFilled(true);
+				ladrillo.setFillColor(Color.white);
 				pause(60);
 			}
 			x = x+ANCHO_LADRILLO/2;
@@ -78,6 +86,13 @@ public class Arkanoid_1 extends acm.program.GraphicsProgram{
 	}
 	
 	//private boolean chequeaLadrillos(){
+	//boolean auxiliar = true;
+	//GRectangle ladrillo;
+	//if(pelota.getBounds() <=ladrillo){
+	//yVelocidad = -yVelocidad;
+			//auxiliar = false;
+	//}
+	//return auxiliar;
 		
 	//}
 	
