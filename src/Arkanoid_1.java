@@ -11,24 +11,24 @@ import acm.program.*;
 
 public class Arkanoid_1 extends acm.program.GraphicsProgram{
 
-	
+
 	private static int ANCHO_PANTALLA=400;
 	private static int ALTO_PANTALLA=400;
 	private static int ANCHO_CURSOR = 60;
-	
+
 	//constantes para la pirámide
 	private static final int ANCHO_LADRILLO = 30;
 	private static final int ALTO_LADRILLO = 12;
 	private static final int LADRILLOS_BASE = 12;
-	
+
 	GImage fondo = new GImage ("Gif.gif");
 	int alto_pelota = 10;
-	
+
 	GRect cursor;
 	GOval pelota;
 	double xVelocidad = 3;  //velocidad en el eje x
 	double yVelocidad = -3;  //velocidad en el eje y
-	
+
 	public void init(){
 		add(fondo,0,0);
 		setSize(ANCHO_PANTALLA, ALTO_PANTALLA);
@@ -36,28 +36,29 @@ public class Arkanoid_1 extends acm.program.GraphicsProgram{
 		cursor.setFilled(true);
 		cursor.setFillColor(Color.white);
 		add(cursor, 0, ALTO_PANTALLA-100);
-		
+
 		pelota = new GOval(alto_pelota, alto_pelota);
 		pelota.setFilled(true);
 		pelota.setFillColor(Color.white);
 		add(pelota, 185, ALTO_PANTALLA-110);
-		
-		
+
+
 		pintaPiramide();
-		
+
 		addMouseListeners();
 	}
-	
+
 	public void run(){
+		waitForClick();
 		while(true){
 			pelota.move(xVelocidad, yVelocidad);
 			chequeaColision();
 			pause(20);
 		}
 	}
-	
-	
-	
+
+
+
 	private void pintaPiramide(){
 		int x= -(ANCHO_PANTALLA - LADRILLOS_BASE*ANCHO_LADRILLO) /2;
 		int y= 0;
@@ -73,8 +74,8 @@ public class Arkanoid_1 extends acm.program.GraphicsProgram{
 			x = x+ANCHO_LADRILLO/2;
 		}
 	}
-	
-	
+
+
 	private void chequeaColision(){
 		if (chequeaPared()){
 			//chequeo si toca con el cursor
@@ -84,18 +85,18 @@ public class Arkanoid_1 extends acm.program.GraphicsProgram{
 		}
 
 	}
-	
+
 	//private boolean chequeaLadrillos(){
 	//boolean auxiliar = true;
 	//GRectangle ladrillo;
 	//if(pelota.getBounds() <=ladrillo){
 	//yVelocidad = -yVelocidad;
-			//auxiliar = false;
+	//auxiliar = false;
 	//}
 	//return auxiliar;
-		
+
 	//}
-	
+
 	private boolean chequeaPared(){
 		boolean auxiliar = true;
 		//si toca el techo
@@ -117,8 +118,8 @@ public class Arkanoid_1 extends acm.program.GraphicsProgram{
 		}
 		return auxiliar;
 	}
-	
-	
+
+
 	//chequeaCursor devolverá true si ha chocado el cursor con la pelota
 	// y false si no ha chocado.
 	private boolean chequeaCursor(){
@@ -138,21 +139,21 @@ public class Arkanoid_1 extends acm.program.GraphicsProgram{
 		} 
 		return true;
 	}
-	
 
-	
 
-	
+
+
+
 	//mueve el cursor siguiendo la posición del ratón
 	public void mouseMoved (MouseEvent evento){
 		if( (evento.getX()+ANCHO_CURSOR) <= ANCHO_PANTALLA){
 			cursor.setLocation(evento.getX(),ALTO_PANTALLA-100);
 		}
 	}
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
 }
