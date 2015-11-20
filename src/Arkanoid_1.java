@@ -18,7 +18,7 @@ public class Arkanoid_1 extends acm.program.GraphicsProgram{
 	private static final int ALTO_LADRILLO = 12;
 	private static final int LADRILLOS_BASE = 12;
 	
-	int alto_pelota = 20;
+	int alto_pelota = 10;
 	
 	GRect cursor;
 	GOval pelota;
@@ -29,13 +29,13 @@ public class Arkanoid_1 extends acm.program.GraphicsProgram{
 		setSize(ANCHO_PANTALLA, ALTO_PANTALLA);
 		cursor = new GRect(ANCHO_CURSOR,5);
 		cursor.setFilled(true);
-		cursor.setFillColor(Color.BLUE);
+		cursor.setFillColor(Color.black);
 		add(cursor, 0, ALTO_PANTALLA-100);
 		
 		pelota = new GOval(alto_pelota, alto_pelota);
 		pelota.setFilled(true);
-		pelota.setFillColor(Color.red);
-		add(pelota, 0, ALTO_PANTALLA-120);
+		pelota.setFillColor(Color.blue);
+		add(pelota, 185, ALTO_PANTALLA-110);
 
 		pintaPiramide();
 		
@@ -76,6 +76,10 @@ public class Arkanoid_1 extends acm.program.GraphicsProgram{
 		}
 
 	}
+	
+	//private boolean chequeaLadrillos(){
+		
+	//}
 	
 	private boolean chequeaPared(){
 		boolean auxiliar = true;
