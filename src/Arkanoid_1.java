@@ -3,6 +3,7 @@ import java.awt.Color;
 import java.awt.event.MouseEvent;
 
 import acm.graphics.GImage;
+import acm.graphics.GObject;
 import acm.graphics.GOval;
 import acm.graphics.GRect;
 import acm.graphics.GRectangle;
@@ -23,13 +24,15 @@ public class Arkanoid_1 extends acm.program.GraphicsProgram{
 	private static final int LADRILLOS_BASE = 12;
 
 	GImage fondo = new GImage ("Gif.gif");
+	GImage fondo2 = new GImage ("fondo2.jpg");
 	int alto_pelota = 10;
 
 	GRect cursor;
 	GOval pelota;
 	double xVelocidad = 3;  //velocidad en el eje x
 	double yVelocidad = -3;  //velocidad en el eje y
-
+	boolean gameOver = false;
+	
 	public void init(){
 		add(fondo,0,0);
 		setSize(ANCHO_PANTALLA, ALTO_PANTALLA);
@@ -47,17 +50,23 @@ public class Arkanoid_1 extends acm.program.GraphicsProgram{
 		pintaPiramide();
 
 		addMouseListeners();
+		
 	}
 
 	public void run(){
 		
 		waitForClick();
-		while(true){
+		while(!gameOver){
 			pelota.move(xVelocidad, yVelocidad);
 			chequeaColision();
-			pause(20);
+			pause(10);
 		}
+		if(pelota.getY() == ALTO_PANTALLA -1){
+			add(fondo2);
+		}
+		
 	}
+	
 
 
 
@@ -83,22 +92,71 @@ public class Arkanoid_1 extends acm.program.GraphicsProgram{
 		if (chequeaPared()){
 			//chequeo si toca con el cursor
 			if(!chequeaCursor()){
-				//chequeaLadrillos();
+				chequeaLadrillos();
 			}
+		}
+		if(pelota.getY() <=300){
+			gameOver(true);
 		}
 
 	}
+	
+	private void gameOver(boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
 
-	//private boolean chequeaLadrillos(){
-	//boolean auxiliar = true;
-	//GRectangle ladrillo;
-	//if(pelota.getBounds() <=ladrillo){
-	//yVelocidad = -yVelocidad;
-	//auxiliar = false;
-	//}
-	//return auxiliar;
+	private void chequeaLadrillos() {
 
-	//}
+		int pelotaX = (int) pelota.getX();
+		int pelotaY = (int) pelota.getY();
+		int lado = alto_pelota;
+
+		// si chequea posicion devuelve false sigue mirando el resto de puntos
+		//de la pelota
+
+		if( !chequeaPosicion(pelotaX, pelotaY,'y')){
+			if( !chequeaPosicion(pelotaX+lado, pelotaY-1,'y')){
+				if( !chequeaPosicion(pelotaX-1, pelotaY+lado,'x')){
+					if( !chequeaPosicion(pelotaX+lado, pelotaY+lado,'y')){
+					}
+				}
+			}
+		}
+	}
+
+
+
+	/**
+	 * chequeaPosicion dadas unas cordenadas (posX y posY)de la pelota y una
+	 * direccion, calcula el rebote teniendo en cuenta el objeto que se encuentra en esas
+	 * coordenadas.
+	 * 
+	 */
+	private boolean chequeaPosicion(int posX, int posY, char direccion) {
+
+		GObject auxiliar;
+		boolean choque = false;
+		auxiliar = getElementAt(posX, posY);
+
+		// Chequeamos los ladrillos
+		if ((auxiliar != cursor) && (auxiliar != fondo )) {
+			remove(auxiliar);
+			if (direccion == 'y') {
+				yVelocidad = -yVelocidad;
+			} else {
+				xVelocidad = -xVelocidad;
+			}
+			//puntuacion++;// aumentamos la puntuacion en uno
+			choque = true;
+		}
+
+
+		// devolvemos el valor de choque
+		return (choque);
+	}
+
+	
 
 	private boolean chequeaPared(){
 		boolean auxiliar = true;
@@ -117,6 +175,11 @@ public class Arkanoid_1 extends acm.program.GraphicsProgram{
 		//si toca la pared izquierda
 		if (pelota.getX() <= 0){
 			xVelocidad = -xVelocidad;
+			auxiliar = false;
+		}
+		//si toca la pared de abajo
+		if (pelota.getY() ==0){
+			yVelocidad = -yVelocidad;
 			auxiliar = false;
 		}
 		return auxiliar;
